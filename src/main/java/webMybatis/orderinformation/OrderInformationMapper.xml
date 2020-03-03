@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml的文件命名应该是 dao文件名+Mapper.xml-->
+<!-- xml的文件命名其实也可以是 对应哪一个封装类+Mapper.xml -->
+<!-- namespace 应该是映射到dao文件的具体位置。@@并且二者应该是在同一个文件夹下 最好-->
+<mapper namespace="webMybatis.orderinformation.OrderInformationDao">
+	<!-- 通过bean插入一个订单信息 -->
+	<insert id="insertByBean" parameterType="webMybatis.orderinformation.OrderInformation">
+		insert into orderinformation (ordernumber,date,uid,muid,deliveryfee,consigneename,consigneephonenumber,consigneesaddress,productname,producttypes,productprice,expectnumberofproducts,status) values(#{ordernumber},#{date},#{uid},#{muid},#{deliveryfee},#{consigneename},#{consigneephonenumber},#{consigneesaddress},#{productname},#{producttypes},#{productprice},#{expectnumberofproducts},#{status})
+	</insert>
+	<!-- 查询该uid所有订单信息 -->
+	<select id="selectAllOrderforUIDInformation" parameterType="String" resultType="webMybatis.orderinformation.OrderInformation">
+		select * from orderinformation where uid=#{uid} order by date DESC																																										
+	</select>
+	<!-- 查询该uid所有订单信息 -->
+	<select id="selectAllOrderforMUIDInformation" parameterType="String" resultType="webMybatis.orderinformation.OrderInformation">
+		select * from orderinformation where muid=#{muid} order by date DESC
+	</select>
+	<!-- 根据订单号查询订单信息 -->
+	<select id="selectOrderInformationByOnum" parameterType="String" resultType="webMybatis.orderinformation.OrderInformation">
+		select * from orderinformation where ordernumber=#{ordernumber}
+	</select>
+	<!--更新订单的状态信息 -->
+	<update id="updateOrderStatusByordernumber" parameterType="java.util.Map"> 
+		update orderinformation set status=#{wantstatus} where ordernumber=#{ordernumber}
+	</update>
+</mapper>

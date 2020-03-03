@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml的文件命名应该是 dao文件名+Mapper.xml-->
+<!-- xml的文件命名其实也可以是 对应哪一个封装类+Mapper.xml -->
+<!-- namespace 应该是映射到dao文件的具体位置。@@并且二者应该是在同一个文件夹下 最好-->
+<mapper namespace="webMybatis.UserDao">
+	<!-- 查询用户Byname -->
+	<select id="selectUserByName" parameterType="String" resultType="webMybatis.User">
+   	 select * from user where name = ${name}
+	</select>
+	<!-- 询用户Byphone -->
+	<select id="selectUserByPhone" parameterType="String" resultType="webMybatis.User">
+   	 select * from user where phone = ${phone}
+	</select>
+	<!-- 创建用户（通过user这个类）-->
+	<insert id="addUser" parameterType="webMybatis.User">
+   		insert into user (name,phone,password) values(${name},${phone},${password})
+	</insert>
+	<!-- 用户登录-->
+	<select id="login" parameterType="webMybatis.User" resultType="webMybatis.User">
+   		select * from user where phone = ${phone} and password=${password}
+	</select>
+</mapper>

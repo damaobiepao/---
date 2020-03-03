@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml的文件命名应该是 dao文件名+Mapper.xml-->
+<!-- xml的文件命名其实也可以是 对应哪一个封装类+Mapper.xml -->
+<!-- namespace 应该是映射到dao文件的具体位置。@@并且二者应该是在同一个文件夹下 最好-->
+<mapper namespace="webMybatis.productinformation.ProductInformationDao">
+
+	<!-- id,名字，类型，价格，数量 -->
+	<sql id="zqzb">values(#{muid},#{productname},#{producttypes},#{productprice},#{numberofproducts}</sql>
+	
+	<!--根据部分属性查询商品信息 -->
+	<select id="selectProductInformationByBean" parameterType="webMybatis.productinformation.ProductInformation" resultType="webMybatis.productinformation.ProductInformation">
+   		select * from productinformation where muid = #{muid} and productname=#{productname} and producttypes=#{producttypes}
+	</select>
+	<!-- 根据一个Muid查询所有存在的商品信息 -->
+	<select id="selectAllProductInformationByMuid" parameterType="String" resultType="webMybatis.productinformation.ProductInformation">
+		select * from productinformation where muid = #{muid}
+	</select>
+	<!-- 根据部分属性删除一个商品信息 -->
+	<delete id="deleteProductInformationBypartialinformation" parameterType="webMybatis.productinformation.ProductInformation">
+		delete from productinformation where muid = #{muid} and  productname=#{productname} and producttypes=#{producttypes}
+	</delete>
+	<!-- 根据部分属性定位一个商品信息，然后更新 -->
+	<update id="updateProductInformationByBean" parameterType="webMybatis.productinformation.ProductInformation">
+		update productinformation set productprice=#{productprice},numberofproducts=#{numberofproducts},productdescription=#{productdescription}
+		where muid = #{muid} and  productname=#{productname} and producttypes=#{producttypes}
+	</update>
+	<!-- 根据部分属性定位一个商品信息，然后更新数量 -->
+	<update id="updateProductInformationNumberByBean" parameterType="webMybatis.productinformation.ProductInformation">
+		update productinformation set numberofproducts=numberofproducts-#{numberofproducts} where muid = #{muid} and  productname=#{productname} and producttypes=#{producttypes}
+	</update>
+	<!-- 插入一个商品信息 -->
+	<insert id="insertProductInformationByBean" parameterType="webMybatis.productinformation.ProductInformation">
+		 insert into  
+		<choose>
+	        <when test="productdescription!=null and productdescription!=''">
+	             productinformation(muid,productname,producttypes,productprice,numberofproducts,productdescription) values(#{muid},#{productname},#{producttypes},#{productprice},#{numberofproducts},#{productdescription})
+	        </when>
+	        <otherwise>
+	           productinformation(muid,productname,producttypes,productprice,numberofproducts) values(#{muid},#{productname},#{producttypes},#{productprice},#{numberofproducts})
+	        </otherwise>
+  	   </choose> 
+	</insert>
+	<!--  根据关键字在产品名字或类型或产品描述中查找符合的产品信息 -->
+	<select id="selectProductInformationByKeywords" parameterType="String" resultType="webMybatis.productinformation.ProductInformation">
+   		select * from productinformation where productname like "%"#{keywords}"%" or producttypes like "%"#{keywords}"%" or productdescription like "%"#{keywords}"%"
+	</select>
+</mapper>

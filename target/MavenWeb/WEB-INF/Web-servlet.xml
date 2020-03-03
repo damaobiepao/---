@@ -1,0 +1,56 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   http://www.springframework.org/schema/mvc 
+   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 注册静态资源 -->
+   <mvc:resources mapping="/img/**" location="/img/" />
+   <mvc:resources mapping="/image/**" location="/image/" />
+   <mvc:resources mapping="/images/**" location="/images/" />
+   <mvc:resources mapping="/css/**" location="/css/" />
+   <mvc:resources mapping="/js/**" location="/js/" />
+   <mvc:resources mapping="/fonts/**" location="/fonts/" />
+   <mvc:resources mapping="/font-awesome/**" location="/font-awesome/" />
+   <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+   <!-- springMVC不能处理的请求交给tomcat； -->
+	<mvc:default-servlet-handler />
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+   <!-- 配置了对注解的支持 ***替代注解处理器映射器和适配器的配置***-->
+   <mvc:annotation-driven />
+   <!-- 使用组件扫描机制扫描控制器类，控制器类都在controller包及其子包下 -->
+   <context:component-scan base-package="controller" />
+   <!-- MVC视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     	<!--前缀-->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <!--后缀-->
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <!-- 配置MultipartResolver，用于上传文件，使用spring的CommonsMultipartResolver -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- 设定文件上传的最大值为60MB，60*1024*1024
+         <property name="maxUploadSize"  >
+         	<value>5242880‬</value>
+        </property>
+         -->
+ 		<property name="maxUploadSize" value="6000000" />
+        <!-- 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 -->
+   		 <property name="maxInMemorySize" >
+   		 <value>30720</value>
+   		 </property>
+        <!-- 上传文件的临时路径 -->
+    	<property name="uploadTempDir" value="fileUpload/temp"></property>
+        <!-- 延迟文件解析 -->
+   		 <property name="resolveLazily" value="true"/>
+    </bean>
+</beans>

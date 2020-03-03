@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml的文件命名应该是 dao文件名+Mapper.xml-->
+<!-- xml的文件命名其实也可以是 对应哪一个封装类+Mapper.xml -->
+<!-- namespace 应该是映射到dao文件的具体位置。@@并且二者应该是在同一个文件夹下 最好-->
+<mapper namespace="webMybatis.administrator.AdministratorDao">
+	<!-- 根据用户名和密码，查询商家用户 -->
+	<select id="selectAdministrator" parameterType="webMybatis.administrator.Administrator" resultType="webMybatis.administrator.Administrator">
+   		select * from administrator where adminname = #{adminname} and adminpass= #{adminpass}
+	</select>
+</mapper>

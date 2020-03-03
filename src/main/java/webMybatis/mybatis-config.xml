@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 告诉MyBatis到哪里去找映射文件 -->
+    <mappers>
+        <mapper resource="webMybatis/UserMapper.xml" />
+        <mapper resource="webMybatis/merchant/MerchantUserMapper.xml" />
+        <mapper resource="webMybatis/storeinformation/StoreInformationMapper.xml" />
+        <mapper resource="webMybatis/productinformation/ProductInformationMapper.xml" />
+        <mapper resource="webMybatis/administrator/AdministratorMapper.xml" />
+        <mapper resource="webMybatis/orderinformation/OrderInformationMapper.xml" />
+    </mappers>
+	
+</configuration>
